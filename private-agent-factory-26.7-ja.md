@@ -129,13 +129,17 @@ Marketplaceの公式ガイドでは、参照構成としてポート1521のイ�
 1. **Oracle AI Database > Autonomous AI Database**を開きます。
 2. リージョンを確認し、**適用済みフィルタ コンパートメント**で割当済みコンパートメントを選択します。
 3. **Autonomous AI Databaseの作成**をクリックします。
-4. 表示名（例：paf-adb）、データベース名（例：PAFDB）を入力し、パラメータシートのシート2に記録します。
+4. 表示名（例：paf-adb）を入力し、パラメータシートのシート2に記録します。
+  表示名は、一意でなくてもよい。１～255文字。英字、数字、アンダースコア（_）、ハイフン（-）。ただし連続ハイフンは不可。先頭は英字かアンダースコア。
+5. データベース名（例：PAFDB名前）を入力し、パラメータシートのシート2に記録します。
+  データベース名は、英字で始まる30文字以内の英数字。テナンシ内で一意。すべて大文字。
 5. **ワークロード・タイプ**は**トランザクション処理**を選択します。
 6. データベースの構成のAlways Free と 開発者 はデフォルトのオフのままとします。
 7. **データベース・バージョンの選択** は**26ai**を選択します。
 8. 予期しない利用量と料金の増加を避けるため、**自動スケーリングの計算**はこのハンズオンでは**無効**とします。今後も継続利用する場合は、有効にしても構いません。
-9. ECPU数はデフォルトの2 ECPU、ストレージはデフォルトの1024 GBのままとします。
-10. 管理者資格証明の作成で、`ADMIN`のパスワード（例：Welcome12345#）を設定します。パラメータシートのシート2に記録します。
+9. ECPU数はデフォルトの **2 ECPU** のままとします。
+9. ストレージは **150 GB** とします。
+10. 管理者資格証明の作成で、`ADMIN`の**パスワード（例：Welcome12345#）** を設定します。パラメータシートのシート2に記録します。
 11. ネットワーク・アクセスで**すべての場所からのセキュア・アクセス**を選択します。このハンズオンの前提であるパブリック・エンドポイントが作られます。
 12. 暗号化、バックアップ、タグ、連絡先などに組織固有の要件がなければ、その他の設定はハンズオン用のデフォルト値のままにします。
 13. **作成**をクリックします。
@@ -150,7 +154,7 @@ Marketplaceの公式ガイドでは、参照構成としてポート1521のイ�
 ### Task 3：Private Agent Factory専用のデータベース・ユーザーを作成する
 
 1. 作成したADBの画面上部にある**データベース・アクション > SQL**を開きます。
-2. ブラウザの別タブが開き、`ADMIN`として自動的にサインインしたことを確認します。
+2. ブラウザの別タブが開きます。右上の人型アイコンの右に表示されているユーザーを見て、`ADMIN`として自動的にサインインしたことを確認します。
 3. ガイダンスと警告の右上の「X」をクリックして閉じます。
 2. 下記のSQLをワークシートに貼り付けます。各SQL文の`<DB_USER>`をPrivate Agent Factory用のユーザー名（例：PAFUSER）で置き換えます（計6カ所）。`<DB_PASSWORD>`も適切なパスワード（例：Welcome12345#）で置き換えます（計2カ所）なお、パスワードは作成する2つのユーザーで同じパスワードである必要があります。
 ユーザー名とパスワードをパラメータシートのシート2のAgent Factory用DBユーザー名とAgent Factory用DBユーザーのパスワードに記録します。
@@ -189,9 +193,46 @@ CREATE USER AAI_RO_PAFUSER
 GRANT CREATE SESSION TO AAI_RO_PAFUSER;
 ```
 
+![Private Agent Factory ユーザー 2つの作成SQL例](images\sql.png)
+
 3. 画面上部の **スクリプトの実行ボタン（再生ボタンのような▷の右隣）** をクリックして、6つのSQLを実行します。
 
 4. スクリプト出力のタブで6つのSQLが正常終了することを確認します。これでPrivate Agent Factory用の2つのユーザーが作成されます。
+
+スクリプト出力タブに以下のように出力されます。
+
+```text:出力例
+
+User PAFUSERは作成されました。
+
+経過時間: 00:00:00.183
+
+
+Grantが正常に実行されました。
+
+経過時間: 00:00:00.008
+
+
+Grantが正常に実行されました。
+
+経過時間: 00:00:00.016
+
+
+Grantが正常に実行されました。
+
+経過時間: 00:00:00.011
+
+
+User AAI_RO_PAFUSERは作成されました。
+
+経過時間: 00:00:00.130
+
+
+Grantが正常に実行されました。
+
+経過時間: 00:00:00.004
+
+```
 
 > Autonomous AI Databaseでは、`SYS.V_$PARAMETER`を指定します。旧版の`V$PARAMETER`は使いません。
 
@@ -214,8 +255,6 @@ GRANT CREATE SESSION TO AAI_RO_PAFUSER;
 - [Download Database Connection Information — Download client credentials from the OCI Console](https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/adbsb/connect-download-wallet.html)
 - [Database Service Names for Autonomous AI Database](https://docs.oracle.com/en-us/iaas/autonomous-database-serverless/doc/predefined-database-services-names.html)
 - [Installation from OCI Marketplace — Configure Database Connection](https://docs.oracle.com/en/database/oracle/agent-factory/26.7/paias/install-oci-marketplace.html)
-
-<!-- 26.7更新: インスタンス・ウォレットを選び、公式に推奨された_tpurgentを追記。根拠: https://docs.oracle.com/en/database/oracle/agent-factory/26.7/paias/install-oci-marketplace.html 「Configure Database Connection」、https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/adbsb/connect-download-wallet.html 「Download Client Credentials (Wallets)」。 -->
 
 ## Lab 1：Private Agent Factory 26.7をデプロイして初期設定する
 
@@ -280,7 +319,7 @@ ssh-keygen -t ed25519 -f ./paf_marketplace_ed25519
 ![MarketplaceのAgent Factory](images/install-marketplace-listing.png)
 
 
-2. **アプリケーションの入手**を選択してOCIへサインインします。リージョンと製品情報を確認し、**スタックの起動**を選択します。
+2. **アプリケーションの入手**を選択してOCIへサインインします（既にサインインしている場合は、スタックの起動画面に直接遷移します）。**リージョン**（例： US Midwest(Chicago)）と製品情報（アプリケーションの名前が **Oracle AI Database Private Agent Factory** となっていること）を確認し、**スタックの起動**を選択します（スタックとは、Resource Manager（Terraform）のデプロイ定義一式のことです。）、
 
 ![Launch Stack](images/install-launch-stack.png)
 
@@ -290,9 +329,14 @@ ssh-keygen -t ed25519 -f ./paf_marketplace_ed25519
 5. 使用条件を？マークをクリックして確認し、同意される場合は、**I have reviewed and accept the Publisher terms and conditions** （使用条件）にチェックを入れます。
 
 5. 右下の**スタックの起動**を選択します。前画面で選択したコンパートメントにResource Managerスタックが作成されます。
+
+![スタック設定確認](images\stack.png)
+
 6. **スタックの作成**の**スタック情報**で、スタックの**名前** と **説明** を設定または確認します（表示されているデフォルトのままでも問題ありません）。
 
 7. **Next** をクリックします。
+
+![スタック設定確認](images\stack-confirm.png)
 
 8. **変数の構成** の **Compute Instance for Private Agent Factory Container**で、次の項目を設定します。
    - **Compute Compartment**（VMを配置するコンパートメント）：割当済みコンパートメント
@@ -301,28 +345,39 @@ ssh-keygen -t ed25519 -f ./paf_marketplace_ed25519
    - **OCPUs**（VM OCPU数）：4（x86シェイプでは8 CPUコア相当）
    - **Memory in GB**（VMメモリー）：32 GB
    - **Increase boot volume in GB**（VMブート・ボリューム）：150 GB
-   - **SSH public key**（SSH公開キー）：`paf_marketplace_ed25519.pub`をアップロードする。秘密鍵はアップロードしない
-9. **Network for Compute and Database Connectivity**で、都議の項目を設定します。
+   - **SSH public key**（SSH公開キー）：`paf_marketplace_ed25519.pub`をアップロードする。秘密鍵はアップロードしない。公開鍵の保存場所はワークシートのシート2のメモを確認。
+9. **Network for Compute and Database Connectivity**で、次の項目を設定します。
    - **VCN compartment** で、Lab 0でVCNを作成した際に指定したのコンパートメント（パラメータシートのシート1の割当済みコンパートメント名）
    - **Existing VCN**で、Lab 0 で作成した VCN（パラメータシートのシート2）
-   - **Existing subnet**で、**パブリック・サブネット**を選択します（パラメータシート参照）。
+   - **Existing subnet**で、**パブリック・サブネット**を選択します（パラメータシートのシート2のパブリック・サブネット名を参照）。パブリックサブネットは一覧の最下部に表示されます。上に表示されるプライベートサブネットと間違えないようにしまし。
 
 10. **Next** をクリックします。
 
+![スタックコンピュート設定画面](images\stack-compute.png)
+![スタックネットワーク設定画面](images\stack-network.png)
+
 11. **作成** をクリックします。
 
-![旧版のスタック変数画面](images/install-configure-variables.png)
+![スタック確認画面](images\stack-create.png)
 
 
 12. ジョブの詳細画面の**状態**が**成功**になるまで待ちます。通常、1～2分程度で完了します。
-13. ブラウザをリロードして、ジョブの**Output**タブを開き、`Agent_Factory_URL`をコピーします（右端の **・・・** をクリックして **Copy** をクリック）。
 
+
+![スタック作成完了](images\stack-success.png)
+
+13. ブラウザを**リロード** して、ジョブの**Output**タブを開き、`Agent_Factory_URL`をコピーします（右端の **・・・** をクリックして **Copy** をクリック）。
+
+
+
+![Private Agent Factoryのジョブ完了OUTPUT画面](images/PAF-URL.png)
+
+**`Agent_Factory_URL` の例**
 ```text
 https://<instance_public_ip>:8080/agentFactory/installation
 ```
 
-![Private Agent Factoryのジョブ完了OUTPUT画面](images/PAF-URL.png)
-
+パラメータシートのシート3の Agent Factory URL に記録します。
 
 **公式ドキュメント**
 
@@ -332,7 +387,7 @@ https://<instance_public_ip>:8080/agentFactory/installation
 - [Creating an Instance — Add SSH Keys (Linux)](https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/launchinginstance.htm)
 - [Managing Key Pairs on Linux Instances](https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/managingkeypairs.htm)
 
-<!-- 26.7更新: 旧版のGeneral Settings/Network Configurationから、現行のコンピュート欄・ネットワーク欄へ手順を変更。ED25519鍵生成はCloud ShellではなくWindows、macOS、LinuxのローカルOpenSSHを使う。公開鍵と秘密鍵の保存先、両者の用途、OutputタブからのURL取得も追加。根拠: https://docs.oracle.com/en/database/oracle/agent-factory/26.7/paias/install-oci-marketplace.html 「Launch Stack」「Security and Operational Requirements」、https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/connect-to-linux-instance.htm 「Connecting to a Linux Instance with SSH」、https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/launchinginstance.htm 「Add SSH Keys (Linux)」、https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/managingkeypairs.htm 「Managing Key Pairs on Linux Instances」。 -->
+
 
 ### Task 2：Private Agent Factory初回セットアップ（初期設定）
 
@@ -360,6 +415,9 @@ https://<instance_public_ip>:8080/agentFactory/installation
 ![データベース設定画面](images/install-database_setup.png)
 
 7. **+Install**を選択し、コンポーネントのインストールが終わるまで待ちます（通常5分程度で完了します）。
+
+![PAFインストール](images\paf-install.png)
+
 8. **Install**のスピナーが停止し、**Installation Log**の最後にLLM設定へ進むよう案内する**Please proceed to the next step for LLM Configuration**と表示されたら、**Next**を選択します。
 
 ![コンポーネント・インストール画面](images/install-db_installation_complete.png)
@@ -386,7 +444,7 @@ https://<instance_public_ip>:8080/agentFactory/installation
    - **Embedding provider**（埋込みモデル・プロバイダ）：**OCI GenAI**
    - **Authentication**（OCIの認証モード）：**API Key**
    - **Model ID**（埋込みモデルID）：今回のハンズオンでは、**cohere.embed-v4.0**
-   - **Endpoint**（サービス・エンドポイント）：パラメータシートのシート1のOCI Generative AIのサービス・エンドポイント。例えば、**https://inference.generativeai.us-chicago-1.oci.oraclecloud.com**（OCI GenAIのエンドポイントが`us-chicago-1`の場合）
+   - **Endpoint**（サービス・エンドポイント）：パラメータシートのシート1のOCI Generative AIのサービス・エンドポイント。例えば、 **https://inference.generativeai.us-chicago-1.oci.oraclecloud.com** （OCI GenAIのエンドポイントが`us-chicago-1`の場合）
    - **Compartment ID**（コンパートメントOCID）：パラメータシートのシート1の割当済みコンパートメントOCID
    - **User**（ユーザーOCID）：パラメータシートのシート1のOCIユーザーOCID
    - **Finger Print**（フィンガープリント）：パラメータシートのシート1のOCI APIキーのフィンガープリント
@@ -394,6 +452,9 @@ https://<instance_public_ip>:8080/agentFactory/installation
    - **Region**（リージョン）：パラメータシートのシート1のOCIリージョン。今回は、**us-chicago-1**。
    - **Key File**（OCI API署名用PEM秘密キー・ファイル）：パラメータシートのシート1のOCI API署名用PEM秘密キーの保存先の秘密鍵ファイル。公開キーやED25519秘密鍵ではありません
 11. **Test connection**をクリックして接続テストを実行します。**Connection successful**と表示されたら、**Save Configuration**を選択します。
+
+![Embedding設定](images\paf-embedding.png)
+
 12. **Finish Installation**を選択し、作成した管理者アカウント（パラメータシートのシート2 のAgent Factory管理者のメールアドレス）でサインインします。
 > **Generative model** と **Embedding model** のそれぞれの**Save Configuration** ボタンをクリックして設定を保存する必要があります。両方を保存完了すると **Finish Installation** ボタンが有効になります。
 
