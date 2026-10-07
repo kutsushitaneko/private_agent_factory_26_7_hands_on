@@ -9,7 +9,9 @@
 
 ## このハンズオンで作るもの
 
-次の作業を行います。
+![ハンズオン環境](images/ハンズオン環境.png)
+
+このハンズオンでは、以下の手順で環境構築とエージェントの作成を行います。
 
 1. Private Agent FactoryのVMを配置するVCNとパブリック・サブネットを作成する
 2. パブリックなAutonomous AI Database 26aiと、Private Agent Factory専用のデータベース・ユーザーを作成する
