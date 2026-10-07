@@ -197,7 +197,7 @@ CREATE USER AAI_RO_PAFUSER
 GRANT CREATE SESSION TO AAI_RO_PAFUSER;
 ```
 
-![Private Agent Factory ユーザー 2つの作成SQL例](images\sql.png)
+![Private Agent Factory ユーザー 2つの作成SQL例](images/sql.png)
 
 3. 画面上部の **スクリプトの実行ボタン（再生ボタンのような▷の右隣）** をクリックして、6つのSQLを実行します。
 
@@ -276,7 +276,7 @@ Marketplaceデプロイでは、ED25519公開鍵の入力が必要です（こ�
 1. Tera Term の **新しい接続** 画面で **キャンセル** をクリック
 2. **設定** から**SSH鍵生成（N）...** を選択
 3. 鍵の種類 で **ED25519** を選択して、**生成** をクリック
-![ED25519](images\ED25519.png)
+![ED25519](images/ED25519.png)
 4. **公開鍵の保存（I）** をクリックして、適切なフォルダーに公開鍵を保存して、パラメータシートへ記録
 5. パスフレーズを入力して、**秘密鍵の保存（P）** をクリックして、適切なフォルダーに秘密鍵を保存して、パラメータシートへ記録
 
@@ -342,13 +342,13 @@ ssh-keygen -t ed25519 -f ./paf_marketplace_ed25519
 
 5. 右下の**スタックの起動**を選択します。前画面で選択したコンパートメントにResource Managerスタックが作成されます。
 
-![スタック設定確認](images\stack.png)
+![スタック設定確認](images/stack.png)
 
 6. **スタックの作成**の**スタック情報**で、スタックの**名前** と **説明** を設定または確認します（表示されているデフォルトのままでも問題ありません）。
 
 7. **Next** をクリックします。
 
-![スタック設定確認](images\stack-confirm.png)
+![スタック設定確認](images/stack-confirm.png)
 
 8. **変数の構成** の **Compute Instance for Private Agent Factory Container**で、次の項目を設定します。
    - **Compute Compartment**（VMを配置するコンパートメント）：割当済みコンパートメント
@@ -365,18 +365,18 @@ ssh-keygen -t ed25519 -f ./paf_marketplace_ed25519
 
 10. **Next** をクリックします。
 
-![スタックコンピュート設定画面](images\stack-compute.png)
-![スタックネットワーク設定画面](images\stack-network.png)
+![スタックコンピュート設定画面](images/stack-compute.png)
+![スタックネットワーク設定画面](images/stack-network.png)
 
 11. **作成** をクリックします。
 
-![スタック確認画面](images\stack-create.png)
+![スタック確認画面](images/stack-create.png)
 
 
 12. ジョブの詳細画面の**状態**が**成功**になるまで待ちます。通常、1～2分程度で完了します。
 
 
-![スタック作成完了](images\stack-success.png)
+![スタック作成完了](images/stack-success.png)
 
 13. ブラウザを**リロード** して、ジョブの**Output**タブを開き、`Agent_Factory_URL`をコピーします（右端の **・・・** をクリックして **Copy** をクリック）。
 
@@ -428,7 +428,7 @@ https://<instance_public_ip>:8080/agentFactory/installation
 
 7. **+Install**を選択し、コンポーネントのインストールが終わるまで待ちます（通常5分程度で完了します）。
 
-![PAFインストール](images\paf-install.png)
+![PAFインストール](images/paf-install.png)
 
 8. **Install**のスピナーが停止し、**Installation Log**の最後にLLM設定へ進むよう案内する**Please proceed to the next step for LLM Configuration**と表示されたら、**Next**を選択します。
 
@@ -465,7 +465,7 @@ https://<instance_public_ip>:8080/agentFactory/installation
    - **Key File**（OCI API署名用PEM秘密キー・ファイル）：パラメータシートのシート1のOCI API署名用PEM秘密キーの保存先の秘密鍵ファイル。公開キーやED25519秘密鍵ではありません
 11. **Test connection**をクリックして接続テストを実行します。**Connection successful**と表示されたら、**Save Configuration**を選択します。
 
-![Embedding設定](images\paf-embedding.png)
+![Embedding設定](images/paf-embedding.png)
 
 12. **Finish Installation**を選択し、作成した管理者アカウント（パラメータシートのシート2 のAgent Factory管理者のメールアドレス）でサインインします。
 > **Generative model** と **Embedding model** のそれぞれの**Save Configuration** ボタンをクリックして設定を保存する必要があります。両方を保存完了すると **Finish Installation** ボタンが有効になります。
