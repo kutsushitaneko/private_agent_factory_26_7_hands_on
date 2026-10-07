@@ -9,7 +9,7 @@
 
 ## このハンズオンで作るもの
 
-![ハンズオン環境](images/ハンズオン環境.png)
+![ハンズオン環境](images/handson-diagram.png)
 
 このハンズオンでは、以下の手順で環境構築とエージェントの作成を行います。
 
@@ -68,7 +68,7 @@ OCI Enterprise AI(Generative AI)のモデル呼び出し権限も必要です。
 
 ## パラメータシート
 
-事前に Excel形式で配布しているパラメータシートをご利用ください。
+[パラメータシート](private-agent-factory-26.7-hands-on-parameter-sheet.xlsx)をご利用ください。
 パラメータシート（Excel）は以下の3つのシートで構成されています。
 - 1_事前取得_Prework
 - 2_作業中_Decide
