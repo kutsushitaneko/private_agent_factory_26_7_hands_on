@@ -43,9 +43,9 @@ OCIコンソールの基本操作を理解していることを前提としま�
 
 OCI Enterprise AI(Generative AI)のモデル呼び出し権限も必要です。
 
-手元にはWebブラウザと Private Agent Factory が OCI Enterprise AI(Generative AI)サービスの LLM と 埋め込みモデルにアクセスするための OCI API署名キーを用意します（リソースプリンシパルの使用も可能ですが本ハンズオン手順では、API署名キーを使用します）。
+手元には **Webブラウザ** と Private Agent Factory が OCI Enterprise AI(Generative AI)サービスの LLM と 埋め込みモデルにアクセスするための **OCI API署名キー** を用意します（インスタンスプリンシパルの使用も可能ですが本ハンズオン手順では、API署名キーを使用します）。
 
-また、Private Agent Factory をインストールする OCI Compute にアクセスするための ED25519鍵ペアも必要です（本ハンズオンでは、ssh 接続は行いませんが、Private Agent Factory の Marketplace からのインストールには、公開鍵が必須入力項目となっています。なお、鍵のタイプは、ED25519のみサポートされています）。ED25519鍵ペアは、Lab 1のMarketplaceデプロイ直前にローカルPCで作成します。
+また、Private Agent Factory をインストールする OCI Compute にアクセスするための **ED25519鍵ペア** も必要です（本ハンズオンでは、ssh 接続は行いませんが、Private Agent Factory の Marketplace からのインストールには、公開鍵が必須入力項目となっています。なお、鍵のタイプは、ED25519のみサポートされています）。ED25519鍵ペアは、Lab 1のMarketplaceデプロイ直前にローカルPCで作成します。
 
 テナンシ管理者が不足する権限を付与する手順は、[Appendix A](#appendix-aハンズオン用リソースを作成せずにoci権限を確認し不足分を付与する)を参照してください。
 
